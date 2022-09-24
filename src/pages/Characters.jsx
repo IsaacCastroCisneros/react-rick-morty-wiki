@@ -7,8 +7,14 @@ import SearchBar from '../components/SearchBar'
 export default function Characters() 
 {
 
-  const searchParam = useLocation().search
-  const [url,setUrl] = useState('')
+  const searchParam = useLocation()
+  const [params,setParam] = useState(
+    {
+      page:'',
+      characters:''
+    }
+  )
+  const [url,setUrl] = useState('https://rickandmortyapi.com/api/character/') 
    
   const{data:characters,status}=useQuery(['characters',url],getCharacters,
   {
@@ -25,10 +31,10 @@ export default function Characters()
     }
   })
 
-  useEffect(()=>
+  function searchCharacter()
   {
-    setUrl(`https://rickandmortyapi.com/api/character/${searchParam??''}`)
-  },)
+     setUrl(prev=>`${prev}${searchParam.search}`)
+  }
 
   async function getCharacters({queryKey})
   {
@@ -69,7 +75,7 @@ export default function Characters()
 
   return (
      <>
-       <SearchBar />
+       <SearchBar searchCharacter={searchCharacter} />
        {
          characters?.results.map(char=>
             {

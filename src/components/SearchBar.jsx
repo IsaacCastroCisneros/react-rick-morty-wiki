@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 
-export default function SearchBar() 
+export default function SearchBar({searchCharacter}) 
 {
   
   const navigate = useNavigate()
@@ -10,6 +10,7 @@ export default function SearchBar()
   {
     e.preventDefault()
     navigate(`/characters/search?name=${e.target.querySelector('input').value}`)
+    searchCharacter()
   }
 
   return (
