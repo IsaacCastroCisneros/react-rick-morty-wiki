@@ -7,15 +7,27 @@ import SearchBar from '../components/SearchBar'
 export default function Characters() 
 {
 
-  const searchParam = useLocation()
-  const [params,setParam] = useState(
+  const reqParam = useLocation()
+  const [yo,setYo]=useState(false)
+  const [params,setParams] = useState(
     {
+      characters:'',
       page:'',
-      characters:''
     }
   )
-  const [url,setUrl] = useState('https://rickandmortyapi.com/api/character/') 
+  const url = joinUrl()
+  
+  function joinUrl()
+  {
+    const newParams = Object.values(params).join('')
+    return 'https://rickandmortyapi.com/api/character/'+newParams
+  }
    
+  useEffect(()=>
+  {
+    setParams(prev=>{return {...prev,characters:reqParam.search}})
+  },[yo])
+
   const{data:characters,status}=useQuery(['characters',url],getCharacters,
   {
     keepPreviousData:true,
@@ -30,11 +42,6 @@ export default function Characters()
         console.log('fetch failed')
     }
   })
-
-  function searchCharacter()
-  {
-     setUrl(prev=>`${prev}${searchParam.search}`)
-  }
 
   async function getCharacters({queryKey})
   {
@@ -75,7 +82,7 @@ export default function Characters()
 
   return (
      <>
-       <SearchBar searchCharacter={searchCharacter} />
+       <SearchBar setYo={setYo} />
        {
          characters?.results.map(char=>
             {
@@ -89,7 +96,7 @@ export default function Characters()
            characters && RenderPageButtons(characters.info.pages).map(num=>
             {
               return(
-                <PageButton num={num} setUrl={setUrl} />
+                <PageButton num={num} setParams={setParams}/>
               )
             })
          }
@@ -98,12 +105,12 @@ export default function Characters()
   )
 }
 
-function PageButton({num,setUrl})
+function PageButton({num,setParams})
 {
   return(
     <li>
         <button
-         onClick={()=>setUrl(prev=>prev+`&page=${num}`)}
+         onClick={()=>setParams(prev=>{return {...prev,page:`&page=${num}`}})}
         >{num}</button>
     </li>
   )
