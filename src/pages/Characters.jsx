@@ -19,8 +19,10 @@ export default function Characters()
   
   function joinUrl()
   {
-    const newParams = Object.values(params).join('')
-    return 'https://rickandmortyapi.com/api/character/'+newParams
+    let newParams = Object.values(params).filter(prop=>prop!=='').join('&')
+    console.log(newParams)
+    if(newParams==='&')newParams=''
+    return 'https://rickandmortyapi.com/api/character/?'+newParams
   }
    
   useEffect(()=>
@@ -45,7 +47,6 @@ export default function Characters()
 
   async function getCharacters({queryKey})
   {
-    console.log(queryKey[1])
     try
     {
       const res = await axios.get(queryKey[1])
@@ -110,7 +111,7 @@ function PageButton({num,setParams})
   return(
     <li>
         <button
-         onClick={()=>setParams(prev=>{return {...prev,page:`&page=${num}`}})}
+         onClick={()=>setParams(prev=>{return {...prev,page:`page=${num}`}})}
         >{num}</button>
     </li>
   )
