@@ -1,16 +1,13 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 
-export default function SearchBar({setYo}) 
+export default function SearchBar({updateParams}) 
 {
-  
-  const navigate = useNavigate()
 
   function search(e)
   {
     e.preventDefault()
-    navigate(`/characters/search?name=${e.target.querySelector('input').value}`)
-    setYo(prev=>!prev)
+    updateParams({character:`name=${e.target.querySelector('input').value}`})
   }
 
   return (

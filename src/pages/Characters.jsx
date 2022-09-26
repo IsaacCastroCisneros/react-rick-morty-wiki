@@ -1,38 +1,34 @@
 import React,{useState,useEffect} from 'react'
 import {useQuery} from 'react-query'
-import {useLocation} from 'react-router-dom'
 import axios from 'axios'
 import SearchBar from '../components/SearchBar'
+import Paginate from '../components/Paginate'
+
 
 export default function Characters() 
 {
+  const [params,setParams] = useState({})
 
-  const reqParam = useLocation()
-  const [yo,setYo]=useState(false)
-  const [params,setParams] = useState(
-    {
-      characters:'',
-      page:'',
-    }
-  )
   const url = joinUrl()
-  
+
   function joinUrl()
   {
-    let newParams = Object.values(params).filter(prop=>prop!=='').join('&')
-    console.log(newParams)
-    if(newParams==='&')newParams=''
+    let newParams = Object.values(params)?.join('&')
     return 'https://rickandmortyapi.com/api/character/?'+newParams
   }
-   
-  useEffect(()=>
+
+  function updateParams(params)
   {
-    setParams(prev=>{return {...prev,characters:reqParam.search}})
-  },[yo])
+    if(params.character!==undefined)
+    {
+      params.page=''
+    }
+    setParams(prev=>{return{...prev,...params}})
+  }
 
   const{data:characters,status}=useQuery(['characters',url],getCharacters,
   {
-    keepPreviousData:true,
+    keepPreviousData:true,  
     onSuccess:(data)=>
     {
         console.log(data)
@@ -68,52 +64,27 @@ export default function Characters()
     }
   }
 
-  function RenderPageButtons(quantity)
-  {
-    let buttons = []
-    for (let i = 1; i <= quantity; i++) 
-    {
-      buttons.push(i);
-    }
-
-    return buttons
-  }
-
-  console.log(url)
-
   return (
-     <>
-       <SearchBar setYo={setYo} />
-       {
-         characters?.results.map(char=>
-            {
-                return(
-                    <img src={char.image} alt="" />
-                )
-            })
-       }
-       <ul>
-         {
-           characters && RenderPageButtons(characters.info.pages).map(num=>
-            {
-              return(
-                <PageButton num={num} setParams={setParams}/>
-              )
-            })
-         }
-       </ul>
-     </>
-  )
+    <>
+      <SearchBar updateParams={updateParams}/>
+      <div className='grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))]'>
+        {characters?.results.map((char, pos) => {
+          return (
+            <div className='block' key={pos}>
+              <img className='block w-[100%]' 
+                   src={char.image} 
+                />   
+            </div>
+          )
+        })}
+      </div>
+      <Paginate
+        pageRange={characters?.info.pages}
+        params ={params.page}
+        updateParams={updateParams}
+       />
+    </>
+  );
 }
 
-function PageButton({num,setParams})
-{
-  return(
-    <li>
-        <button
-         onClick={()=>setParams(prev=>{return {...prev,page:`page=${num}`}})}
-        >{num}</button>
-    </li>
-  )
-}
 
