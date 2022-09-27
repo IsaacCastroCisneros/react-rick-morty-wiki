@@ -48,11 +48,11 @@ export default function Characters()
     }
     if(params.species!==undefined)
     {
-      params.species='species='+params.page
+      params.species='species='+params.species
     }
     if(params.gender!==undefined)
     {
-      params.gender='gender='+params.page
+      params.gender='gender='+params.gender
     }
     
     setParams(prev=>{return{...prev,...params}})
