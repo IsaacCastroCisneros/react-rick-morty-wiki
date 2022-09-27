@@ -1,15 +1,28 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate'
 
-export default function Paginate({pageRange,params,updateParams}) {
+export default function Paginate(props) {
+ 
+  const{
+    pageRange,
+    page,
+    updateParams,
+    setPage
+  }=props
 
-  console.log(params)
+
+  function pageChange(e)
+  {
+    updateParams({page:e.selected+1})
+    setPage(e.selected)
+  }
+  
   return (
     <ReactPaginate className='flex'
     pageCount={pageRange || 0}
-    onPageChange={e=>updateParams({page:`page=${e.selected+1}`})}
+    onPageChange={pageChange}
     activeClassName='text-red-500'
-    forcePage={params-1 || 0}
+    forcePage={page}
     renderOnZeroPageCount={null}
    />
   )

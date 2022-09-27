@@ -7,7 +7,7 @@ export default function SearchBar({updateParams})
   function search(e)
   {
     e.preventDefault()
-    updateParams({character:`name=${e.target.querySelector('input').value}`})
+    updateParams({character:e.target.querySelector('input').value})
   }
 
   return (
