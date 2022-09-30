@@ -1,15 +1,24 @@
 import React,{useState,useEffect} from 'react'
-import {useQuery} from 'react-query'
-import axios from 'axios'
-import SearchBar from '../components/SearchBar'
-import Paginate from '../components/Paginate'
-import Spinner from '../components/Spinner'
+import NavBar from '../components/NavBar'
+import ByPagination from '../components/ByPagination'
+import ByInfinite from '../components/ByInfinite'
+import SearchOptions from '../components/SearchOptions'
 
+export const CharacterContext=React.createContext()
 
 export default function Characters() 
 {
   const[params,setParams] = useState({})
   const[page,setPage]=useState(0)
+  const[typeQuery,setTypeQuery]=useState('pagination')
+
+  const contextValues=
+  {
+    updateParams,
+    changeQuery,
+    params,
+    setParams
+  }
 
   const url = joinUrl()
 
@@ -21,7 +30,6 @@ export default function Characters()
 
   function updateParams(params)
   {
-
     if(Object.keys(params).length===0)
     {
       setParams({})
@@ -30,7 +38,7 @@ export default function Characters()
 
     if(params.page!==undefined)
     {
-      params.page='page='+params
+      params.page='page='+params.page
       setParams(prev=>{return{...prev,...params}})
       return 
     }
@@ -38,9 +46,9 @@ export default function Characters()
     params.page=0
     setPage(0)
 
-    if(params.character!==undefined)
+    if(params.search!==undefined)
     {
-      params.character='name='+params.character
+      params.search='name='+params.search
     }
     if(params.status!==undefined)
     {
@@ -57,76 +65,40 @@ export default function Characters()
     
     setParams(prev=>{return{...prev,...params}})
   }
-
-  const{data:characters,isFetching}=useQuery(['characters',url],getCharacters,
+ 
+  function changeQuery(e)
   {
-    keepPreviousData:true,  
-    onSuccess:(data)=>
-    {
-        console.log(data)
-        console.log('successfully fetched')
-    },
-    onError:(err)=>
-    {
-        console.log(err)
-        console.log('fetch failed')
-    }
-  })
-
-  async function getCharacters({queryKey})
-  {
-    try
-    {
-      const res = await axios.get(queryKey[1])
-      return res.data
-    }
-    catch(err)
-    {
-      console.log(err.message)
-
-      if(err.response)
-      {
-        console.log(err.response.data)
-        console.log('STATUS: '+err.response.status)
-      }
-      else if(err.request)
-      {
-        console.log(err.request)
-      }
-    }
+    const value = e.target.value
+    updateParams({page:1})
+    setPage(0)
+    setTypeQuery(value)
   }
 
   return (
     <>
-      <SearchBar updateParams={updateParams}/>
-        <div className='grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))]'>
-          {characters?.results.map((char, pos) => {
-            return (
-              <div className='block' key={pos}>
-                <img className='block w-[100%]' 
-                      src={char.image} 
-                  />   
+      <CharacterContext.Provider value={contextValues}>
+        <NavBar />
+        <main className="px-[1.8rem] mt-[6rem] pb-[2.5rem] w-[100rem] max-w-[100%] mx-auto">
+          <div className="flex gap-[3rem]">
+            <div className="flex-[1.5]">
+              <SearchOptions/>
+            </div>
+            <div className="flex-[3]">
+              <div className="relative">
+                {typeQuery === "pagination" && 
+                  <ByPagination
+                    url={url}
+                    page={page}
+                    setPage={setPage}
+                    updateParams={updateParams}
+                  />
+                }
+                {typeQuery === "infinite" && <ByInfinite url={url} />}
               </div>
-            )
-          })}
-        </div>
-        <Paginate
-          pageRange={characters?.info.pages}
-          page ={page}
-          setPage={setPage}
-          updateParams={updateParams}
-          />
-        {
-          isFetching && <Spinner isLoading={true}/>
-        }
-        <button
-         onClick={()=>updateParams({status:'dead'})}
-        >status</button>
-        <button
-         onClick={()=>updateParams({})}
-         >
-          reset
-        </button>
+            </div>
+          </div>
+        </main>
+      </CharacterContext.Provider>
     </>
   );
 }
