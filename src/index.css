@@ -1,3 +1,77 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*
+{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+div,img
+{
+    display: block;
+}
+html
+{
+    font-size: 16px;
+}
+body
+{
+    background-color: #232840;
+    color: #9ac6c9;
+    font-family: 'Source Code Pro', monospace;
+    height: 100vh;
+}
+
+
+.appears
+{
+  animation: appears 580ms ease-in;
+}
+.grow
+{
+  animation: grow 200ms ease-in;  
+}
+
+.link
+{
+  color: #f649a7;
+}
+.link:hover,.active
+{
+  color: #59df7f;
+  text-decoration: underline;
+}
+
+
+.gradient
+{
+  background-image: linear-gradient(to top,#594ab0,#51b1da);
+}
+
+@keyframes appears 
+{
+  0%
+  {
+    transform: translateY(5rem);
+    opacity: 0;
+  }    
+  100%
+  {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes grow 
+{
+  0%
+  {
+    transform: scale(0%);
+  }
+  100%
+  {
+    transform: scale(100%);
+  }
+  
+}

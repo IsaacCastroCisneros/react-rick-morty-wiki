@@ -1,15 +1,22 @@
 import { useState, CSSProperties } from "react";
 import ScaleLoader from "react-spinners/ScaleLoader";
 
- const yo = {
+ const styles = {
     display: "block",
     margin: "0 auto",
     borderColor: "grey",
+    transform:"scale(200%)"
   };
 
-export default function Spinner({isLoading}) 
+export default function Spinner() 
 {
     return (
-        <ScaleLoader color={'#000'} loading={isLoading} cssOverride={yo} size={150} />
+        <div className="fixed right-[4rem] bottom-[5.5rem]">
+          <ScaleLoader
+            color={"#59df7f"}
+            loading={true}
+            cssOverride={styles}
+          />
+        </div>
     );
 }

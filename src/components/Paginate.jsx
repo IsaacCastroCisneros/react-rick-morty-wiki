@@ -18,12 +18,18 @@ export default function Paginate(props) {
   }
   
   return (
-    <ReactPaginate className='flex'
-    pageCount={pageRange || 0}
-    onPageChange={pageChange}
-    activeClassName='text-red-500'
-    forcePage={page}
-    renderOnZeroPageCount={null}
-   />
-  )
+    <ReactPaginate
+      className="flex items-center mt-[3.5rem]"
+      pageCount={pageRange || 0}
+      onPageChange={pageChange}
+      activeLinkClassName="rounded-[.4rem] text-white bg-link"
+      pageLinkClassName='px-[.8rem] py-[.4rem]'
+      nextClassName='px-[1rem] hover:text-link'
+      previousClassName='px-[1rem] hover:text-link'
+      nextLabel='Next >'
+      previousLabel='< Previous'
+      forcePage={page}
+      renderOnZeroPageCount={null}
+    />
+  );
 }

@@ -9,7 +9,6 @@ function App()
   
   return (
     <>
-      <NavBar />
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
