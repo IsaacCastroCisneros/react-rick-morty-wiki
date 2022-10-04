@@ -1,12 +1,9 @@
 import React,{useContext,useRef,useState} from 'react'
-import { CharacterContext } from '../pages/Characters';
-import FilterButton from './FilterButton';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 export default function FilterBox({label,children}) 
 {
-  const context = useContext(CharacterContext)
   const container = useRef();
 
   const[bool,setBool]=useState(false)

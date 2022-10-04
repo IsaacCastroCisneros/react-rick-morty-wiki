@@ -10,7 +10,7 @@ export default function Characters()
 {
   const[params,setParams] = useState({})
   const[page,setPage]=useState(0)
-  const[typeQuery,setTypeQuery]=useState('pagination')
+  const[typeQuery,setTypeQuery]=useState('infinite')
 
   const contextValues=
   {
@@ -19,6 +19,11 @@ export default function Characters()
     params,
     setParams
   }
+
+  useEffect(()=>
+  {
+     window.scrollTo(0,0)
+  },[params])
 
   const url = joinUrl()
 

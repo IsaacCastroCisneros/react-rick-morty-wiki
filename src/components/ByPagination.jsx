@@ -8,6 +8,8 @@ import Card from './Card'
 
 export default function ByPagination(props) 
 {
+  const[notFound,setNotFound]=useState(false)
+
   const{
     url,
     page,
@@ -35,11 +37,13 @@ export default function ByPagination(props)
     try
     {
       const res = await axios.get(queryKey[1])
+      setNotFound(false)
       return res.data
     }
     catch(err)
     {
       console.log(err.message)
+      setNotFound(true)
 
       if(err.response)
       {
@@ -55,20 +59,25 @@ export default function ByPagination(props)
 
   return (
     <>
-        <div className='grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-[1rem] gap-y-[3rem]'>
-          {characters?.results?.map((char) => {
-            return <Card {...char} isFetching={isFetching}/>
-          })}
-        </div>
-        <Paginate
-          pageRange={characters?.info?.pages}
-          page ={page}
-          setPage={setPage}
-          updateParams={updateParams}
-          />
-        {
-          isFetching&&<Spinner/>
-        }
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-[1rem] gap-y-[3rem]">
+        {characters?.results?.map((char) => {
+          return <Card {...char} key={char.id} isFetching={isFetching} />;
+        })}
+      </div>
+      {
+        notFound&&<span className='w-[100%] block'>nothing here :( search another thing</span>
+      }
+      <Paginate
+        pageRange={characters?.info?.pages}
+        page={page}
+        setPage={setPage}
+        updateParams={updateParams}
+      />
+      {isFetching && (
+        <Spinner
+          css={{ position: "fixed", right: "4rem", bottom: "5.5rem" }}
+        />
+      )}
     </>
   );
 }

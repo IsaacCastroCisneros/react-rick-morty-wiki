@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { useInfiniteQuery } from 'react-query'
 import {useInView} from 'react-intersection-observer'
 import Spinner from './Spinner'
@@ -8,6 +8,7 @@ import Card from './Card'
 
 export default function ByInfinite({url}) 
 {
+  const[notFound,setNotFound]=useState(false)
   const{ref,inView}= useInView();
   
   const{
@@ -19,7 +20,7 @@ export default function ByInfinite({url})
   {
     getNextPageParam:(page)=>
     {
-      const next = page.info.next
+      const next = page?.info?.next
       return next
     }
   })
@@ -40,28 +41,56 @@ export default function ByInfinite({url})
     {
       newUrl = pageParam
     }
+    try
+    {
+      const res = await axios.get(newUrl)
+      setNotFound(false)
+      return res.data
+    }
+    catch(err)
+    {
+      console.log(err.message)
+      setNotFound(true)
 
-    const res = await axios.get(newUrl)
-    return res.data
+      if(err.response)
+      {
+        console.log(err.response.data)
+        console.log('STATUS: '+err.response.status)
+      }
+      else if(err.request)
+      {
+        console.log(err.request)
+      }
+    }
   }
 
   return (
     <>
-      <div>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-[1rem] gap-y-[3rem]">
+        {characters?.pages?.map((page) => {
+          return page?.results.map((char) => {
+            return <Card {...char} key={char.id} isFetching={isFetching} />;
+          });
+        })}
         {
-           characters?.pages?.map(page=>
-                {
-                  return page.results.map(char=>
-                        {
-                            return <Card image={char.image} />
-                        })
-                })
+          notFound&&<span>nothing here :( search another thing</span>
         }
       </div>
-      {
-        isFetching&&<Spinner isLoading={true}/>
+      {isFetching && 
+        <div className='mt-[2.5rem]'>
+          <Spinner
+            css={{
+              display: "flex",
+              position:'relative',
+              justifyContent:'center',
+            }}
+          />
+        </div>
       }
-      <span ref={ref}>intersector</span>
+      {
+        hasNextPage===false&&<span className='w-[100%] text-center block mt-[2rem] text-[1.3rem]'>No more shit :)</span>
+      }
+      <span ref={ref} className='block h-[1rem] w-[1rem]'></span>
     </>
   );
 }

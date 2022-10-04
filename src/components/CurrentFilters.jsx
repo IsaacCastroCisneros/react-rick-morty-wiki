@@ -7,21 +7,19 @@ export default function CurrentFilters()
 {
   const{params,setParams}=useContext(CharacterContext)
 
-  const paramValues = Object.values(params)
-  const values = paramValues.filter(param=>typeof param==='string').map(param=> param.split('=').pop())
+  const newParams = {...params}
+  delete newParams.page
 
-  const paramKeys = Object.keys(params).filter(param=>param!=='page')
-
+  const paramValues = Object.values(newParams)
+  const values = paramValues.map(param=> param.split('=').pop())
+  const paramKeys = Object.keys(newParams)
   const filters = values.map((param,pos)=>{return {prop:paramKeys[pos],value:param}})
 
-  console.log(params)
-
   return (
-    <div className='border-[1px] border-gray-500 p-[1rem]'>
+    <div className='border-[1px] flex-1 border-gray-500 p-[1rem]'>
       <h1 className="text-hover text-[2rem] font-bold mb-[1rem]">Current Filters:</h1>
       <ul className="flex flex-col gap-[.6rem]">
         {filters.map((filter) => {
-          if (filter.value === "") return null;
           return (
             <CurrentFilter
               value={filter.value}
@@ -48,7 +46,7 @@ function CurrentFilter(props)
   function removeFilter(prop)
   {
     const newParams={...params}
-    newParams[prop]=''
+    delete newParams[prop]
     setParams(newParams)
   }
 

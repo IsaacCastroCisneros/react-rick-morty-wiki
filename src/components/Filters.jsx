@@ -32,7 +32,6 @@ export default function Filters()
           <FilterButton filter={{ gender: "Genderless" }} label={"Genderless"} />
         </FilterBox>
       </div>
-      <button onClick={() => updateParams({})}>reset</button>
     </>
   );
 }
