@@ -82,7 +82,6 @@ export default function Characters()
   return (
     <>
       <CharacterContext.Provider value={contextValues}>
-        <NavBar />
         <main className="px-[1.8rem] mt-[6rem] pb-[2.5rem] w-[100rem] max-w-[100%] mx-auto">
           <div className="flex gap-[3rem]">
             <div className="flex-[1.5]">

@@ -43,7 +43,7 @@ export default function Card(props)
   }
 
   return (
-    <div className="block relative p-[1.5rem] rounded-[.5rem] bg-card border border-gray-600 transition-all duration-200"
+    <div className="block relative p-[1.5rem] rounded-[.5rem] bg-secondary border border-border transition-all duration-200"
     style={brightness(isFetching)}
     >
       <span
@@ -69,7 +69,7 @@ export default function Card(props)
           {gender}
         </span>
         <Link
-          to={`/character/${id}`}
+          to={`/wiki/characters/${id}`}
           className="w-[100%] text-center text-link hover:text-hover hover:underline"
         >
           Character Profile

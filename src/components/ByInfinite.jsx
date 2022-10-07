@@ -83,6 +83,7 @@ export default function ByInfinite({url})
               display: "flex",
               position:'relative',
               justifyContent:'center',
+              width:'auto'
             }}
           />
         </div>

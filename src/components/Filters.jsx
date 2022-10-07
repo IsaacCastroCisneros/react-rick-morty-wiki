@@ -1,12 +1,9 @@
 import React,{useContext} from 'react'
 import FilterBox from './FilterBox';
 import FilterButton from './FilterButton';
-import { CharacterContext } from '../pages/Characters';
 
 export default function Filters() 
 {
-  const {updateParams}=useContext(CharacterContext)
-      
   return (
     <>
       <div>

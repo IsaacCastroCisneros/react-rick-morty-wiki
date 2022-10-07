@@ -11,13 +11,13 @@ export default function Home()
       <nav className='w-[100%] flex justify-center bottom-[5rem] absolute'>
          <ul className='flex text-[2rem] gap-[7rem] text-link'>
            <li>
-              <Link className='hover:text-hover hover:underline' to='/characters'>Characters</Link>
+              <Link className='hover:text-hover hover:underline' to='wiki/characters'>Characters</Link>
            </li>
            <li>
-              <Link className='hover:text-hover hover:underline' to='/episodes'>Episodes</Link>
+              <Link className='hover:text-hover hover:underline' to='wiki/episodes'>Episodes</Link>
            </li>
            <li>
-              <Link className='hover:text-hover hover:underline' to='/locations'>Locations</Link>
+              <Link className='hover:text-hover hover:underline' to='wiki/locations'>Locations</Link>
            </li>
          </ul>
       </nav>
