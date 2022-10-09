@@ -79,7 +79,19 @@ export default function CharacterProfile()
       {character && (
         <article className="flex flex-col gap-[2rem]">
               <Episodes character={character}/>
-              <Location character={character}/>
+              {
+                character.location.name!=='unknown'&&<Location character={character}/>
+              }
+              {
+                character.location.name==='unknown'&&
+                <Block 
+                 type="lo"
+                 character={character}
+                 data={character.location}
+                 isOnlyOne={true}
+                 />
+              }
+              <Origin character={character}/>
         </article>
       )}
     </main>
@@ -99,7 +111,7 @@ function Location({character})
     return res.data
   }
 
-  console.log(location)
+
   return(
     <Block
       data={location}
@@ -138,15 +150,57 @@ function Episodes({character})
   );
 }
 
+function Origin({character})
+{
+  const originArr = character.origin.url.split('/')
+  const originNum = originArr[originArr.length-1] 
+  if(originNum==='')
+  {
+    return(
+      <Block
+       isFetching={false}
+       data={{name:'unknowm'}}
+       character={character}
+       type="or"
+       />
+   )
+  }
+
+  const url = 'https://rickandmortyapi.com/api/location/'+originNum
+
+  const{data:origin,isFetching}=useQuery(['origin',url],getOrigin)
+
+  async function getOrigin({queryKey})
+  {
+    const res = await axios.get(queryKey[1])
+    return res.data
+  }
+  console.log(origin)
+
+  return(
+     <Block
+      isFetching={isFetching}
+      data={origin}
+      character={character}
+      type="or"
+      />
+  )
+}
+
 function BlockElement({el,pos,type}) 
 {
-  console.log('mirame'+type)
   return (
     <li key={el.id} className="flex py-[.3rem] gap-[.5rem] border-b-[1px] border-border">
-      <a href="" className="link ml-[1.5rem]">
+      {
+        el.name!=='unknown'&&
+        <a href="" className="link ml-[1.5rem]">
          {type==='ep'&&<span>ep#{el.id} | {el.name}</span>}
-         {type==='lo'&&<span>{el.name}</span>}
-      </a>
+         {(type==='lo'||type==='or')&&<span>{el.name}</span>}
+        </a>
+      }
+      {
+        el.name==='unknown'&&<span>{el.name}</span>
+      }
       { type==='ep'&&
         pos === 0 && <span> first appereance!</span>}
     </li>
@@ -163,10 +217,9 @@ function Block(props)
     isFetching,
     data,
     character,
-    type
+    type,
+    isOnlyOne=data&&!Array.isArray(data)
   }=props
-
-  const isOnlyOne =data&&!Array.isArray(data)
 
   return (
     <section className='border-[1px] bg-secondary border-border py-[2rem] px-[1.5rem]'>
@@ -178,6 +231,7 @@ function Block(props)
         <strong className="text-hover text-[2rem] block">
           {type==="ep"&&<span className='text-white'>Episodes where {<span className='text-hover'> "{character.name}" </span> } appears:</span>} 
           {type==="lo"&&<span className='text-white'>{<span className='text-hover'> "{character.name}" </span> } Current Location :</span>} 
+          {type==="or"&&<span className='text-white'>{<span className='text-hover'> "{character.name}" </span> } Origin Location :</span>} 
         </strong>
         {
           !isOnlyOne&&
@@ -205,7 +259,7 @@ function Block(props)
             data?.map((ep, pos) => {
               return <BlockElement pos={pos} el={ep} key={ep.id} type={type}/>;
             })}
-          {isOnlyOne && <BlockElement pos={0} el={data} type={type} />}
+          {isOnlyOne && <BlockElement pos={0} el={data} type={type}/>}
         </ul>
       </div>
     </section>
