@@ -3,10 +3,8 @@ import { CharacterContext } from '../pages/Characters';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-export default function CurrentFilters() 
+export default function CurrentFilters({params,setParams,updateParams}) 
 {
-  const{params,setParams}=useContext(CharacterContext)
-
   const newParams = {...params}
   delete newParams.page
 
@@ -19,9 +17,10 @@ export default function CurrentFilters()
     <div className='border-[1px] flex-1 border-gray-500 p-[1rem]'>
       <h1 className="text-hover text-[2rem] font-bold mb-[1rem]">Current Filters:</h1>
       <ul className="flex flex-col gap-[.6rem]">
-        {filters.map((filter) => {
+        {filters.map((filter,pos) => {
           return (
             <CurrentFilter
+              key={pos}
               value={filter.value}
               prop={filter.prop}
               params={params}
@@ -30,6 +29,7 @@ export default function CurrentFilters()
           );
         })}
       </ul>
+      <button className='text-[1.2rem] link capitalize block text-center w-[100%] mt-[2rem]' onClick={() => updateParams({})}>reset filters</button>
     </div>
   );
 }
@@ -52,7 +52,7 @@ function CurrentFilter(props)
 
   return (
     <li className='gradient flex items-center py-[.4rem] px-[1rem] rounded-[.5rem]'>
-      <span className='capitalize font-bold text-white'>{prop}|</span>
+      <span className='capitalize font-bold text-white'>{prop!=='episode'?prop:'season'}|</span>
       <span className='text-white' 
        >{value}</span>
       <button className='ml-[auto] text-white'

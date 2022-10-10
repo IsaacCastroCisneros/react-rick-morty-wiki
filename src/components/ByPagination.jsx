@@ -5,11 +5,10 @@ import Paginate from './Paginate'
 import Spinner from './Spinner'
 
 import Card from './Card'
+import useFetch from '../custom-hooks/useFetch'
 
 export default function ByPagination(props) 
 {
-  const[notFound,setNotFound]=useState(false)
-
   const{
     url,
     page,
@@ -17,45 +16,7 @@ export default function ByPagination(props)
     updateParams
   }=props
 
-  const{data:characters,isFetching}=useQuery(['characters',url],getCharacters,
-  {
-    keepPreviousData:true,  
-    onSuccess:(data)=>
-    {
-        console.log(data)
-        console.log('successfully fetched')
-    },
-    onError:(err)=>
-    {
-        console.log(err)
-        console.log('fetch failed')
-    }
-  })
-
-  async function getCharacters({queryKey})
-  {
-    try
-    {
-      const res = await axios.get(queryKey[1])
-      setNotFound(false)
-      return res.data
-    }
-    catch(err)
-    {
-      console.log(err.message)
-      setNotFound(true)
-
-      if(err.response)
-      {
-        console.log(err.response.data)
-        console.log('STATUS: '+err.response.status)
-      }
-      else if(err.request)
-      {
-        console.log(err.request)
-      }
-    }
-  }
+  const{data:characters,isFetching,notFound}=useFetch(url,'none')
 
   return (
     <>

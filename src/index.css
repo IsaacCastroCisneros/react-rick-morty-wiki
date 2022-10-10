@@ -50,6 +50,13 @@ body
   background-image: linear-gradient(to top,#594ab0,#51b1da);
 }
 
+.gradient-pink
+{
+  background-image: linear-gradient(to top,#3d0e64,#32a3d3);
+}
+
+
+
 @keyframes appears 
 {
   0%

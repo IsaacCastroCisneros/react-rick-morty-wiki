@@ -6,6 +6,7 @@ import Spinner from '../components/Spinner'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import useShowList from '../custom-hooks/useShowList';
+import useFetch from '../custom-hooks/useFetch';
 
 
 export default function CharacterProfile() 
@@ -100,17 +101,7 @@ export default function CharacterProfile()
 
 function Location({character})
 {
-  const locationArr = character.location.url.split('/')
-  const url = 'https://rickandmortyapi.com/api/location/'+locationArr[locationArr.length-1]
-
-  const{data:location,isFetching}=useQuery(['location',url],getLocation)
-
-  async function getLocation({queryKey})
-  {
-    const res = await axios.get(queryKey[1])
-    return res.data
-  }
-
+  const{data:location,isFetching}=useFetch('https://rickandmortyapi.com/api/location/','splitSingle',character)
 
   return(
     <Block
@@ -124,21 +115,7 @@ function Location({character})
 
 function Episodes({character}) 
 {
-  const episodesNum= character.episode.map(ep=>
-    {
-      const arr = ep.split('/')
-      return Number(arr[arr.length-1]) 
-    })
-
-  const url = 'https://rickandmortyapi.com/api/episode/'+episodesNum.join(',')
-
-  const{data:episodes,isFetching}=useQuery(['episodes',url],getEpisodes)
-
-  async function getEpisodes({queryKey})
-  {
-    const res = await axios.get(queryKey[1])
-    return res.data
-  }
+  const{data:episodes,isFetching}=useFetch('https://rickandmortyapi.com/api/episode/','splitArr',character)
 
   return (
     <Block
@@ -165,17 +142,7 @@ function Origin({character})
        />
    )
   }
-
-  const url = 'https://rickandmortyapi.com/api/location/'+originNum
-
-  const{data:origin,isFetching}=useQuery(['origin',url],getOrigin)
-
-  async function getOrigin({queryKey})
-  {
-    const res = await axios.get(queryKey[1])
-    return res.data
-  }
-  console.log(origin)
+  const{data:origin,isFetching}=useFetch('https://rickandmortyapi.com/api/location/'+originNum,'none')
 
   return(
      <Block

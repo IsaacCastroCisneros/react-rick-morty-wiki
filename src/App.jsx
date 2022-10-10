@@ -5,6 +5,7 @@ import CharacterProfile from './pages/CharacterProfile';
 import Characters from './pages/Characters';
 import Episodes from './pages/Episodes';
 import Home from './pages/Home';
+import Locations from './pages/Locations';
 
 function Layout()
 {
@@ -29,6 +30,7 @@ function App()
               <Route path=':id' element={<CharacterProfile/>}/>
             </Route>
             <Route path="episodes" element={<Episodes />} />
+            <Route path="locations" element={<Locations/>} />
           </Route>
         </Route>
       </Routes>

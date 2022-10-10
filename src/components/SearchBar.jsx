@@ -1,12 +1,10 @@
 import React,{useContext} from 'react'
-import { CharacterContext } from '../pages/Characters'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
 
-export default function SearchBar() 
+export default function SearchBar({updateParams}) 
 {
-  const{updateParams}=useContext(CharacterContext)
 
   function search(e)
   {

@@ -1,7 +1,6 @@
-import React,{useRef,useEffect, useState} from 'react'
+import React,{useState} from 'react'
 import { Link } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import loadImg from '/img/19.jpeg'
 import Spinner from './Spinner'
 
 export default function Card(props) 
@@ -57,28 +56,23 @@ export default function Card(props)
       >
         {status}
       </span>
-      <Link to={`/wiki/characters/${id}`} className='block relative w-[267.64px] h-[267.64px]'>
+      <Link to={`/wiki/characters/${id}`} className='block relative'>
         {
           spinner&&
           <Spinner
           css={
             {
+              display:'flex',
               position:'absolute',
-              top:'50%',
-              left:'50%',
-              transform:'translate(-50%,-50%)',
-              zIndex:2
+              width:'100%',
+              justifyContent:'center'
             }
           }
           />
         }
-        {
-          spinner&&
-          <img src={loadImg} alt="" className='absolute w-[100%] brightness-[45%] z-0'/>
-        }
         <LazyLoadImage
           src={image}
-          className='w-[100%] absolute z-5'
+          className='w-[100%] z-5'
           beforeLoad={()=>setSpinner(true)}
           afterLoad={()=>setSpinner(false)}
          />
