@@ -1,8 +1,5 @@
 {
   "dimensions": [
-    {
-      "id": 1,
-      "dimensions": [
         "Dimension C-137",
         "unknown",
         "Post-Apocalyptic Dimension",
@@ -36,7 +33,6 @@
         "Tusk Dimension",
         "Magic Dimension",
         "Merged Dimension"
-      ]
-    }
-  ]
+      ],
+  "type":[]
 }

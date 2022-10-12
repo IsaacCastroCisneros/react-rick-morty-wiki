@@ -34,7 +34,7 @@ export default function Locations()
   {
     const sets = locations?.results.map(res=>
       {
-        return res.dimension
+        return res.type
       })
     const hmm = [...new Set([...types,...sets])] 
     setTypes(hmm )
@@ -42,16 +42,15 @@ export default function Locations()
 
   async function si()
   {
-    await fetch('http://localhost:3000/dimensions/1',
+    await fetch('http://localhost:3000/type',
     {
       method:'PUT',
       headers:
       {
         'Content-Type': 'application/json'
       },
-      body:JSON.stringify({id:1,dimensions:types})
+      body:types
     })
-    console.log('yooo')
   }
 
   return (
