@@ -1,6 +1,4 @@
-import React,{useState,useEffect} from 'react'
-import {useQuery} from 'react-query'
-import axios from 'axios'
+import React from 'react'
 import Paginate from './Paginate'
 import Spinner from './Spinner'
 

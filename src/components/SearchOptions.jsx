@@ -9,7 +9,7 @@ export default function SearchOptions({updateParams,params,setParams})
 
   return (
     <div className="sticky top-[5.5rem] flex flex-col pr-[1rem] max-h-[44rem] overflow-y-auto gap-[1.2rem]">
-      <SearchBar updateParams={updateParams}/>
+      <SearchBar updateParams={updateParams} placeholder='Search Characters' />
       <ListingSelector updateParams={updateParams}/>
       <Filters updateParams={updateParams}/>
       <CurrentFilters updateParams={updateParams} params={params} setParams={setParams}/>

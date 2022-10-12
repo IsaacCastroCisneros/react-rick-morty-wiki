@@ -25,10 +25,6 @@ export default function useFetch(url,type='none',elToSplitting)
         const locationArr = elToSplitting.location.url.split('/')
         return url+locationArr[locationArr.length-1]
       }
-      case 'single':
-      {
-
-      }
       case 'none':
       {
         return url

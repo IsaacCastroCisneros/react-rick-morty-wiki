@@ -3,6 +3,7 @@ import ByPagination from '../components/ByPagination'
 import ByInfinite from '../components/ByInfinite'
 import SearchOptions from '../components/SearchOptions'
 import updateParamsUtil from '../util/updateParams'
+import joiningUrl from '../util/joiningUrl'
 
 export const CharacterContext=React.createContext()
 
@@ -25,13 +26,7 @@ export default function Characters()
     window.scrollTo(0,0)
   },[params])
 
-  const url = joinUrl()
-
-  function joinUrl()
-  {
-    let newParams = Object.values(params)?.join('&')
-    return 'https://rickandmortyapi.com/api/character/?'+newParams
-  }
+  const url = joiningUrl('https://rickandmortyapi.com/api/character/?',params)
 
   function updateParams(params)
   {

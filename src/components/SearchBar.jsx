@@ -3,7 +3,7 @@ import React,{useContext} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
 
-export default function SearchBar({updateParams}) 
+export default function SearchBar({updateParams,placeholder,css}) 
 {
 
   function search(e)
@@ -15,6 +15,7 @@ export default function SearchBar({updateParams})
   return (
     <form
       className="bg-secondary border-border border-[1px] text-text outline-none px-[.3rem] py-[.4rem] rounded-[.5rem] flex"
+      style={css}
       onSubmit={search}
     >
       <button type='submit'>
@@ -24,7 +25,7 @@ export default function SearchBar({updateParams})
         />
       </button>
       <input
-        placeholder="Search Character"
+        placeholder={placeholder}
         className="bg-transparent outline-none flex-1"
         type="text"
       />
