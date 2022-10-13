@@ -9,8 +9,9 @@ module.exports = {
       colors:
       {
         background:'#232840',
-        border:'rgba(255, 255, 255, 0.1)',
+        border:'#9096a2',
         secondary:'rgb(51 51 51)',
+        blockBg:'#1e1e1e',
         text:'#9ac6c9',
         link:'#f649a7',
         hover:'#59df7f',

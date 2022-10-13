@@ -9,11 +9,11 @@ import CurrentFilters from '../components/CurrentFilters';
 import updateParamsUtil from '../util/updateParams';
 import Spinner from '../components/Spinner';
 import joiningUrl from '../util/joiningUrl.js';
+import filters from '../util/json/filtersJson.json';
 
 export default function Locations() 
 {
   const[params,setParams]=useState({})
-  const[types,setTypes]=useState([])
   const[page,setPage]=useState(0)
   const url= joiningUrl('https://rickandmortyapi.com/api/location/?',params)
 
@@ -29,43 +29,17 @@ export default function Locations()
     updateParamsUtil(setParams,setPage,params)
   }
 
-  
-  function lol()
-  {
-    const sets = locations?.results.map(res=>
-      {
-        return res.type
-      })
-    const hmm = [...new Set([...types,...sets])] 
-    setTypes(hmm )
-  }
-
-  async function si()
-  {
-    await fetch('http://localhost:3000/type',
-    {
-      method:'PUT',
-      headers:
-      {
-        'Content-Type': 'application/json'
-      },
-      body:types
-    })
-  }
-
   return (
     <main className="px-[1.8rem] mt-[6rem] pb-[2.5rem] w-[100rem] max-w-[100%] mx-auto">
       <article className="w-[80rem] max-w-[100%] mx-auto block">
-        <div className="flex items-center w-[100%] justify-between mb-[2rem] gap-[2rem]">
-          <FiltersEpisode updateParams={updateParams} />
+        <div className="flex items-start w-[100%] justify-between mb-[2rem] gap-[2rem]">
+          <FiltersLocation updateParams={updateParams}/>
           <SearchBar
             updateParams={updateParams}
             placeholder="Search Location"
             css={{ flex: 1 }}
           />
         </div>
-        <button onClick={lol}>fdsfsfdgvfdgd</button>
-        <button onClick={si}>gffgf</button>
         <CurrentFilters
           params={params}
           setParams={setParams}
@@ -127,40 +101,42 @@ function Location(props)
   );
 }
 
-function FiltersEpisode({updateParams}) 
+function FiltersLocation({updateParams}) 
 {
   return (
-    <div>
-      <FilterBox label={"Type"}>
-        <FilterButton
-          filter={{
-            episode: "episode=S01",
-          }}
-          label={"S01"}
-          updateParams={updateParams}
-        />
-        <FilterButton
-          filter={{
-            episode: "episode=S02",
-          }}
-          label={"S02"}
-          updateParams={updateParams}
-        />
-        <FilterButton
-          filter={{
-            episode: "episode=S03",
-          }}
-          label={"S03"}
-          updateParams={updateParams}
-        />
-        <FilterButton
-          filter={{
-            episode: "episode=S04",
-          }}
-          label={"S04"}
-          updateParams={updateParams}
-        />
-      </FilterBox>
+    <div className='flex flex-col flex-1'>
+      <div>
+        <FilterBox label={"Type"}>
+          {filters.types[0].types.map((type, pos) => {
+            return (
+              <FilterButton
+                key={pos}
+                filter={{
+                  type: "type=" + type
+                }}
+                label={type}
+                updateParams={updateParams}
+              />
+            );
+          })}
+        </FilterBox>
+      </div>
+      <div>
+        <FilterBox label={"Dimensions"}>
+          {filters.dimensions[0].dimensions.map((dimension, pos) => {
+            return (
+              <FilterButton
+                key={pos}
+                filter={{
+                  dimension: "dimension=" + dimension
+                }}
+                label={dimension}
+                updateParams={updateParams}
+              />
+            );
+          })}
+        </FilterBox>
+      </div>
     </div>
   );
 }

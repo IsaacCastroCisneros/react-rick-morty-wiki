@@ -4,6 +4,7 @@ import ByInfinite from '../components/ByInfinite'
 import SearchOptions from '../components/SearchOptions'
 import updateParamsUtil from '../util/updateParams'
 import joiningUrl from '../util/joiningUrl'
+import { useMediaQuery } from 'react-responsive'
 
 export const CharacterContext=React.createContext()
 
@@ -12,6 +13,8 @@ export default function Characters()
   const[params,setParams] = useState({})
   const[page,setPage]=useState(0)
   const[typeQuery,setTypeQuery]=useState('infinite')
+
+  const mob = useMediaQuery({query:'(max-width:888px)'})
 
   const contextValues=
   {
@@ -46,19 +49,25 @@ export default function Characters()
       <CharacterContext.Provider value={contextValues}>
         <main className="px-[1.8rem] mt-[6rem] pb-[2.5rem] w-[100rem] max-w-[100%] mx-auto">
           <div className="flex gap-[3rem]">
-            <div className="flex-[1.5]">
-              <SearchOptions updateParams={updateParams} params={params} setParams={setParams} />
-            </div>
+            {!mob && (
+              <div className="flex-[1.5]">
+                <SearchOptions
+                  updateParams={updateParams}
+                  params={params}
+                  setParams={setParams}
+                />
+              </div>
+            )}
             <div className="flex-[3]">
               <div className="relative">
-                {typeQuery === "pagination" && 
+                {typeQuery === "pagination" && (
                   <ByPagination
                     url={url}
                     page={page}
                     setPage={setPage}
                     updateParams={updateParams}
                   />
-                }
+                )}
                 {typeQuery === "infinite" && <ByInfinite url={url} />}
               </div>
             </div>

@@ -1,14 +1,14 @@
-import React ,{useEffect} from 'react'
+import React, {useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import useFetch from '../custom-hooks/useFetch'
 import Spinner from '../components/Spinner'
 import Block from '../components/Block'
 
-export default function Episode() 
+export default function Location() 
 {
   const{id}=useParams()
-  const url='https://rickandmortyapi.com/api/episode/'+id
-  const{data:episode,isFetching}=useFetch(url)
+  const url='https://rickandmortyapi.com/api/location/'+id
+  const{data:location,isFetching}=useFetch(url)
 
   function charactersUrl(charactersArr)
   {
@@ -40,31 +40,35 @@ export default function Episode()
         height={400}
         width={22}
        />}
-      {episode && (
+      {location && (
           <article className="block">
             <section className='block mb-[3rem]'>
               <h1 className="font-bold text-hover text-[3rem] text-center mb-[2rem]">
-                {episode.name}
+                {location.name}
               </h1>
               <p className="flex gap-[1rem] w-[100%] justify-center text-white font-bold">
-                <span>{episode.air_date}</span> - <span>{episode.episode}</span>
+                <span>{location.type}</span> - <span>{location.dimension}</span>
               </p>
             </section>
-            <CharactersByEpisode url={charactersUrl(episode.characters)} /> 
+            <CharactersBylocation url={charactersUrl(location.residents)} /> 
           </article>          
       )}
     </main>
   );
 }
 
-function CharactersByEpisode({url})
+function CharactersBylocation({url})
 {
   const{data:characters,isFetching}=useFetch(url)
    
   return (
     <>
-      <Block data={characters} type="ch" isFetching={isFetching} />
+      <Block 
+       data={characters} 
+       type="ch" 
+       isFetching={isFetching}
+       title={"Residents:"} 
+       />
     </>
   );
 }
-

@@ -7,6 +7,7 @@ import Characters from './pages/Characters';
 import Episodes from './pages/Episodes';
 import Home from './pages/Home';
 import Locations from './pages/Locations';
+import Location from './pages/Location';
 
 function Layout()
 {
@@ -34,7 +35,10 @@ function App()
               <Route index element={<Episodes/>}/>
               <Route path=':id' element={<Episode/>}/>
             </Route>
-            <Route path="locations" element={<Locations/>}/>
+            <Route path="locations">
+              <Route index element={<Locations/>}/>
+              <Route path=':id' element={<Location/>}/>
+            </Route>
           </Route>
         </Route>
       </Routes>
