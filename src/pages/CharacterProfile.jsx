@@ -54,20 +54,19 @@ export default function CharacterProfile()
 
   return (
     <main className="px-[1.8rem] pt-[5rem] pb-[2.5rem] w-[100rem] max-w-[100%] mx-auto">
-      <div className="flex flex-col items-center">
+      <div className="mob: flex flex-col items-center">
         <img
           src={character?.image}
-          className="rounded-[100%] border-[10px] border-white"
-          alt=""
+          className="mob:w-[15rem] rounded-[100%] border-[10px] border-white"
         />
-        <strong className="text-hover text-[3rem]">{character?.name}</strong>
+        <strong className="mob:text-[2rem] text-hover text-[3rem]">{character?.name}</strong>
       </div>
       <section className="flex text-white items-center gap-[.5rem] justify-center mb-[2rem]">
         <span
           className={`w-[.6rem] h-[.6rem] rounded-[100%] block first-letter 
             ${validatingStatus(character?.status)}`}
         ></span>
-        <strong>
+        <strong className='mob:text-[.8rem]'>
           {character?.status} - {character?.species} - {character?.gender}
         </strong>
       </section>

@@ -18,6 +18,10 @@ module.exports = {
         gradientTop:'#594ab0',
         gradientBottom:'#51b1da',
         card:'#163158'
+      },
+      screens:
+      {
+        'mob': {'max': '572px'},
       }
     },
   },

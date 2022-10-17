@@ -1,7 +1,6 @@
 import React from 'react'
 import Paginate from './Paginate'
 import Spinner from './Spinner'
-
 import Card from './Card'
 import useFetch from '../custom-hooks/useFetch'
 
@@ -18,7 +17,7 @@ export default function ByPagination(props)
 
   return (
     <>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-[1rem] gap-y-[3rem]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-[1rem]">
         {characters?.results?.map((char) => {
           return <Card {...char} key={char.id} isFetching={isFetching} />;
         })}
@@ -36,7 +35,8 @@ export default function ByPagination(props)
         <Spinner
           css={{ position: "fixed", right: "4rem", bottom: "5.5rem" }}
         />
-      )}
+      )}    
     </>
   );
 }
+

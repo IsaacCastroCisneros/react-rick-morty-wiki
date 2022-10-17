@@ -22,13 +22,13 @@ export default function Block(props)
     }=props
 
     return (
-        <section className='border-[1px] bg-blockBg border-border py-[2rem] px-[1.5rem] rounded-[.5rem]'>
+        <section className='mob:py-[1rem] mob:px-[1rem] border-[1px] bg-blockBg border-border py-[2rem] px-[1.5rem] rounded-[.5rem]'>
         <button
             className="flex w-[100%] justify-between items-center"
             onClick={showSwitch}
             style={isOnlyOne?{pointerEvents:'none'}:{}}
         >
-            <strong className="text-hover text-[2rem] block">
+            <strong className="mob:text-[1rem] mob:text-left text-hover text-[2rem] block">
             {type==="ep"&&<span className='text-white'>Episodes where {<span className='text-hover'> "{character.name}" </span> } appears:</span>} 
             {type==="lo"&&<span className='text-white'>{<span className='text-hover'> "{character.name}" </span> } Current Location :</span>} 
             {type==="or"&&<span className='text-white'>{<span className='text-hover'> "{character.name}" </span> } Origin Location :</span>} 
@@ -39,7 +39,7 @@ export default function Block(props)
             !isOnlyOne&&(type!=='ch')&&
             <FontAwesomeIcon
                 icon={faChevronDown}
-                className="text-hover text-[2rem] transition-all duration-200"
+                className="mob:text-[1rem] text-hover text-[2rem] transition-all duration-200"
                 style={{ transform: `rotate(${showList.rotate})`}}
             />
             }
@@ -48,7 +48,7 @@ export default function Block(props)
             style={(!isOnlyOne&&(type!=='ch'))?{ height: showList.height + "px" }:{}}
             className="overflow-hidden transition-all duration-[250ms] ease-in-out"
         >
-            <ul ref={list} className={(type==='ch')&&'grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-[1rem] gap-y-[3rem] py-[3.5rem] w-[]'}>
+            <ul ref={list} className={(type==='ch')?'grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-[1rem] gap-y-[3rem] py-[3.5rem]':undefined}>
             {isFetching && (
                 <Spinner
                   css={{
@@ -78,14 +78,12 @@ function BlockElement({el,pos,type})
 
   const link = (type==='ep')?`/wiki/episodes/${el.id}`:`/wiki/locations/${el.id}`
 
-
-
   return (
-    <li key={el.id} className="flex py-[.3rem] gap-[.5rem] border-b-[1px] border-border">
+    <li key={el.id} className="flex mob:text-[.7rem] py-[.3rem] gap-[.5rem] border-b-[1px] border-border">
       {
         el.name!=='unknowm'&&
         <Link to={link} 
-         className="link ml-[1.5rem]">
+         className="link ml-[1.5rem] mob:ml-[.5rem]">
          {type==='ep'&&<span>ep#{el.id} | {el.name}</span>}
          {(type==='lo'||type==='or')&&<span>{el.name}</span>}
         </Link>

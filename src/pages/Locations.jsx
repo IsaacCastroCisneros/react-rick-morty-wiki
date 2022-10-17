@@ -20,6 +20,7 @@ export default function Locations()
   useEffect(()=>
   {
      window.scrollTo(0,0)
+     document.querySelector('body').style.overflow='auto'
   },[params])
 
   const{data:locations,isFetching,notFound}=useFetch(url)

@@ -63,6 +63,25 @@ body
   pointer-events: auto;
 }
 
+.mob-menu-enter
+{
+  opacity: 0;
+  position: fixed;
+  z-index: 1000;
+}
+.mob-menu-enter-active
+{
+  opacity: 1;
+  position: fixed;
+  z-index: 1000;
+  transition: ease-in-out 200ms;
+}
+
+.overflow
+{
+  overflow: hidden;
+}
+
 @keyframes appears 
 {
   0%

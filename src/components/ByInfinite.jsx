@@ -66,7 +66,7 @@ export default function ByInfinite({url})
 
   return (
     <>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-[1rem] gap-y-[3rem]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] mob:grid-cols-[repeat(2,minmax(8.5rem,1fr))] gap-[1rem]">
         {characters?.pages?.map((page) => {
           return page?.results.map((char) => {
             return <Card {...char} key={char.id} isFetching={isFetching} />;
@@ -92,6 +92,7 @@ export default function ByInfinite({url})
         hasNextPage===false&&<span className='w-[100%] text-center block mt-[2rem] text-[1.3rem]'>No more shit :)</span>
       }
       <span ref={ref} className='block h-[1rem] w-[1rem]'></span>
+      
     </>
   );
 }

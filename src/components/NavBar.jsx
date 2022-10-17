@@ -8,26 +8,6 @@ export default function NavBar()
 {
   const mob = useMediaQuery({query:'(max-width:826px)'})
 
-  useEffect(()=>
-  {
-    window.addEventListener('click',e=>
-    {
-       const navMob = document.querySelector('.navMob')
-       
-       if(e.target.closest('.mobButton')!==null)
-       {
-         navMob.classList.toggle('active-navMob')  
-         return
-       }
-       if(e.target.closest('.navMob')!==null )
-       {
-         navMob.classList.add('active-navMob')  
-         return
-       }
-       navMob.classList.remove('active-navMob')  
-    })
-  })
-
   return (
     <header className="bg-gradient-to-t from-gradientTop to-gradientBottom py-[.5rem] px-[1.8rem] fixed top-0 w-[100%] z-[100] shadow-[.3rem_0_1rem__#000]">
       <div className="w-[100rem] max-w-[100%] my-0 mx-auto flex justify-between items-center">
@@ -56,17 +36,17 @@ function NavBarMob()
      <nav className="navMob absolute p-[1.5rem] bg-blockBg top-[50%] opacity-0 pointer-events-none right-[.5rem] border-border border-[1px] transition-all duration-200 ease-in-out">
        <ul className='flex flex-col gap-[1rem] text-center'>
          <li>
-           <NavLink to="/wiki/characters" className="link font-bold">
+           <NavLink to="/wiki/characters" className="link-mob link font-bold">
              Characters
            </NavLink>
          </li>
          <li>
-           <NavLink to="/wiki/episodes" className="link font-bold">
+           <NavLink to="/wiki/episodes" className="link-mob link font-bold">
              Episodes
            </NavLink>
          </li>
          <li>
-           <NavLink to="/wiki/locations" className="link font-bold">
+           <NavLink to="/wiki/locations" className="link-mob link font-bold">
              Locations
            </NavLink>
          </li>

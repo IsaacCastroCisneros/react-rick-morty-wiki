@@ -19,7 +19,7 @@ export default function Episodes()
   useEffect(()=>
   {
      window.scrollTo(0,0)
-     console.log(url)
+     document.querySelector('body').style.overflow='auto'
   },[params])
 
   const{data:episodes,isFetching,notFound}=useFetch(url)

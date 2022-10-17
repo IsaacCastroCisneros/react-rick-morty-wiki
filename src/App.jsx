@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {Route,Routes,Outlet} from 'react-router-dom'
 import Episode from './pages/Episode';
 import NavBar from './components/NavBar'
@@ -8,6 +7,21 @@ import Episodes from './pages/Episodes';
 import Home from './pages/Home';
 import Locations from './pages/Locations';
 import Location from './pages/Location';
+
+window.addEventListener("click", (e) => 
+{
+  const navMob = document.querySelector(".navMob");
+
+  if(e.target.closest(".mobButton") !== null) 
+  {
+    navMob.classList.toggle("active-navMob");
+    return;
+  }
+  
+  if(e.target.closest(".navMob") !== null && e.target.matches(".link-mob")===false)return
+
+  navMob?.classList.remove("active-navMob");
+});
 
 function Layout()
 {
